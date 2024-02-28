@@ -1,0 +1,196 @@
+CREATE TABLE Concessionaria 
+( 
+ ID INT PRIMARY KEY,  
+ NOME INT,  
+); 
+
+CREATE TABLE Empresas 
+( 
+ ID INT PRIMARY KEY,  
+ CNPJ INT,  
+ ID_concessionaria INT,  
+ ID_descricao_veiculo INT,  
+ ID_Nome INT,  
+); 
+
+CREATE TABLE ID_nome 
+( 
+ ID_nome INT PRIMARY KEY,  
+ Nome fantasia INT,  
+); 
+
+CREATE TABLE Veículos 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Descricao_Veiculos INT,  
+ ID_Empresas INT,  
+); 
+
+CREATE TABLE Descricao_veiculo 
+( 
+ ID INT PRIMARY KEY,  
+ Ar_condicionado INT,  
+ Ano INT,  
+ ID_Modelo_Veiculos INT,  
+ CHASSI INT,  
+ Placa INT,  
+ Ultima_Manutencao INT,  
+ extras INT,  
+); 
+
+CREATE TABLE Modelos_veiculos 
+( 
+ id_modelos_veiculos INT PRIMARY KEY,  
+ Nome INT,  
+ Potencia INT,  
+ Torque INT,  
+ Carga_Max INT,  
+); 
+
+CREATE TABLE Usuarios 
+( 
+ ID INT PRIMARY KEY,  
+ CPF INT,  
+ RG INT,  
+ Data_Nascimento INT,  
+); 
+
+CREATE TABLE Passageiro 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Usuarios INT,  
+); 
+
+CREATE TABLE Viagem 
+( 
+ ID INT PRIMARY KEY,  
+ Data INT,  
+ ID_Passageiro INT,  
+); 
+
+CREATE TABLE Funcionarios_Viagem 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Funcionarios INT,  
+ ID_Viagem INT,  
+); 
+
+CREATE TABLE Funcionarios 
+( 
+ ID INT PRIMARY KEY,  
+ Nome INT,  
+ CPF INT,  
+ RG INT,  
+ Data_Nascimento INT,  
+ Data_Contratacao INT,  
+ ID_Tipo_Funcionario INT,  
+); 
+
+CREATE TABLE Tipo_Funcionario 
+( 
+ ID INT PRIMARY KEY,  
+ Descricao INT,  
+); 
+
+CREATE TABLE Passagem 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Tipo_Passagem INT,  
+); 
+
+CREATE TABLE Tipo_Passagem 
+( 
+ ID INT PRIMARY KEY,  
+ Descricao INT,  
+ Preco INT,  
+); 
+
+CREATE TABLE Passagem_Viagem 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Viagem INT PRIMARY KEY,  
+ ID_Passagem INT,  
+); 
+
+CREATE TABLE Cartao 
+( 
+ ID INT PRIMARY KEY,  
+ Numero_Cartao INT,  
+ Saldo INT,  
+ ID_Status_Cartao INT,  
+ ID_Tipo_Passagem INT,  
+ ID_Usuarios INT,  
+); 
+
+CREATE TABLE Status_Cartao 
+( 
+ ID INT PRIMARY KEY,  
+ Descricao INT,  
+); 
+
+CREATE TABLE Linha_Viagem 
+( 
+ ID_Viagem INT,  
+ ID INT PRIMARY KEY,  
+ ID_LINHA INT,  
+); 
+
+CREATE TABLE Linha 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Roteiro INT,  
+ NOME INT,  
+ NUMERO INT,  
+); 
+
+CREATE TABLE Roteiro 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Roteiro_Pontos INT,  
+); 
+
+CREATE TABLE Roteiro_Pontos 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Enderecos INT,  
+); 
+
+CREATE TABLE Enderecos 
+( 
+ ID INT PRIMARY KEY,  
+ CEP INT,  
+ RUA INT,  
+ BAIRRO INT,  
+ Ponto_De_Referencia INT,  
+); 
+
+CREATE TABLE Escala 
+( 
+ ID INT PRIMARY KEY,  
+ ID_Funcionarios INT,  
+ ID_Funcionarios_Viagem INT,  
+); 
+
+ALTER TABLE Empresas ADD FOREIGN KEY(ID_concessionaria) REFERENCES Concessionaria (ID_concessionaria)
+ALTER TABLE Empresas ADD FOREIGN KEY(ID_descricao_veiculo) REFERENCES Descricao_veiculo (ID_descricao_veiculo)
+ALTER TABLE Empresas ADD FOREIGN KEY(ID_Nome) REFERENCES ID_nome (ID_Nome)
+ALTER TABLE Veículos ADD FOREIGN KEY(ID_Descricao_Veiculos) REFERENCES Descricao_veiculo (ID_Descricao_Veiculos)
+ALTER TABLE Veículos ADD FOREIGN KEY(ID_Empresas) REFERENCES Empresas (ID_Empresas)
+ALTER TABLE Descricao_veiculo ADD FOREIGN KEY(ID_Modelo_Veiculos) REFERENCES Modelos_veiculos (ID_Modelo_Veiculos)
+ALTER TABLE Passageiro ADD FOREIGN KEY(ID_Usuarios) REFERENCES Usuarios (ID_Usuarios)
+ALTER TABLE Viagem ADD FOREIGN KEY(ID_Passageiro) REFERENCES Passageiro (ID_Passageiro)
+ALTER TABLE Funcionarios_Viagem ADD FOREIGN KEY(ID_Funcionarios) REFERENCES Funcionarios (ID_Funcionarios)
+ALTER TABLE Funcionarios_Viagem ADD FOREIGN KEY(ID_Viagem) REFERENCES Viagem (ID_Viagem)
+ALTER TABLE Funcionarios ADD FOREIGN KEY(ID_Tipo_Funcionario) REFERENCES Tipo_Funcionario (ID_Tipo_Funcionario)
+ALTER TABLE Passagem ADD FOREIGN KEY(ID_Tipo_Passagem) REFERENCES Tipo_Passagem (ID_Tipo_Passagem)
+ALTER TABLE Passagem_Viagem ADD FOREIGN KEY(ID_Passagem) REFERENCES Passagem (ID_Passagem)
+ALTER TABLE Cartao ADD FOREIGN KEY(ID_Status_Cartao) REFERENCES Status_Cartao (ID_Status_Cartao)
+ALTER TABLE Cartao ADD FOREIGN KEY(ID_Tipo_Passagem) REFERENCES Tipo_Passagem (ID_Tipo_Passagem)
+ALTER TABLE Cartao ADD FOREIGN KEY(ID_Usuarios) REFERENCES Usuarios (ID_Usuarios)
+ALTER TABLE Linha_Viagem ADD FOREIGN KEY(ID_Viagem) REFERENCES Viagem (ID_Viagem)
+ALTER TABLE Linha_Viagem ADD FOREIGN KEY(ID_LINHA) REFERENCES Linha (ID_LINHA)
+ALTER TABLE Linha ADD FOREIGN KEY(ID_Roteiro) REFERENCES Roteiro (ID_Roteiro)
+ALTER TABLE Roteiro ADD FOREIGN KEY(ID_Roteiro_Pontos) REFERENCES Concessionaria (ID_Roteiro_Pontos)
+ALTER TABLE Roteiro_Pontos ADD FOREIGN KEY(ID_Enderecos) REFERENCES Enderecos (ID_Enderecos)
+ALTER TABLE Escala ADD FOREIGN KEY(ID_Funcionarios) REFERENCES Funcionarios (ID_Funcionarios)
+ALTER TABLE Escala ADD FOREIGN KEY(ID_Funcionarios_Viagem) REFERENCES Funcionarios_Viagem (ID_Funcionarios_Viagem)
